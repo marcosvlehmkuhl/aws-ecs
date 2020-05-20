@@ -1,0 +1,15 @@
+version: '3'
+services:
+  aws-ecs:
+    image: aws-ecs
+    build: ./docker
+    hostname: aws-ecs
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - $PWD:/home/php/app
+      - $PWD/src:/var/www/localhost
+      - $PWD/docker/httpd.conf:/etc/apache2/sites-available/aws-ecs.conf
+    environment:
+      FOO: "${FOO}"
