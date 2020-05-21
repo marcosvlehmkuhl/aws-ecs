@@ -1,15 +1,27 @@
-version: '3'
+version: '3.6'
 services:
+  postgres:
+    image: postgres:12
+    restart: always
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+      # POSTGRES_PASSWORD: mypassword
   aws-ecs:
     image: aws-ecs
-    build: ./docker
-    hostname: aws-ecs
+    build: .
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - $PWD:/home/php/app
-      - $PWD/src:/var/www/localhost
-      - $PWD/docker/httpd.conf:/etc/apache2/sites-available/aws-ecs.conf
+    - "8080:8080"
+    depends_on:
+    - "postgres"
+    restart: always
     environment:
-      FOO: "${FOO}"
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+     
+volumes:
+  db_data:
+
+    

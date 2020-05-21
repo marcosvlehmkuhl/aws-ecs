@@ -7,8 +7,7 @@ stop:
 	docker-compose stop
 
 clean:
-	docker-compose down
-	docker rmi aws-ecs
+	docker-compose down -v
 
 build:
 	docker-compose build
