@@ -6,7 +6,7 @@ name: Deploy dev branch
 jobs:
   deploy:
       name: deploy
-      runs-on: ubuntu-latest
+      runs-on: self-hosted
       steps:
           - uses: actions/checkout@v2
           - uses: actions/setup-node@v1
