@@ -13,5 +13,5 @@ jobs:
             with:
                 node-version: '12'
 
-          - name: docker
-            run: docker build .
+          - name: telnet
+            run: timeout --signal=9 2 telnet hasura-stage.cmkwnhfxp1wt.us-east-1.rds.amazonaws.com 5432
